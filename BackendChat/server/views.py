@@ -17,16 +17,19 @@ class ServerListViewSet(viewsets.ViewSet):
         by_serverid = request.query_params.get("by_serverid")
         with_num_members = request.query_params.get("with_num_members") == "true"
 
-        if by_user or by_serverid and not request.user.is_authenticated:
-            print("inside")
-            raise AuthenticationFailed()
+        # if by_user or by_serverid and not request.user.is_authenticated:
+        #     print("inside")
+        #     raise AuthenticationFailed()
 
         if category:
             self.querySet = self.querySet.filter(category__name=category)
 
         if by_user:
-            user_id = request.user.id
-            self.querySet = self.querySet.filter(member=user_id)
+            if request.user.is_authenticated:
+                user_id = request.user.id
+                self.querySet = self.querySet.filter(member=user_id)
+            else:
+                raise AuthenticationFailed()
 
         if with_num_members:
             self.querySet = self.querySet.annotate(num_members=Count("member"))
@@ -35,6 +38,9 @@ class ServerListViewSet(viewsets.ViewSet):
             self.querySet = self.querySet[: int(qty)]
 
         if by_serverid:
+            if not request.user.is_authenticated:
+                raise AuthenticationFailed()
+
             try:
                 self.querySet = self.querySet.filter(id=by_serverid)
                 if not self.querySet.exists():
