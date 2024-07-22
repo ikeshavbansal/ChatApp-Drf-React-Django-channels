@@ -1,6 +1,7 @@
 from django.db.models import Count
 from rest_framework import viewsets
 from rest_framework.exceptions import AuthenticationFailed, ValidationError
+from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 
 from .models import Server
@@ -9,6 +10,7 @@ from .serializers import ServerSerializers
 
 class ServerListViewSet(viewsets.ViewSet):
     querySet = Server.objects.all()
+    permission_classes = [IsAuthenticated]
 
     def list(self, request):
         category = request.query_params.get("category")
