@@ -11,9 +11,12 @@ import {ThemeProvider} from "@emotion/react"
 import createMuiTheme from './theme/theme.tsx';
 import {Provider} from 'react-redux'
 import store from './store';
+import Explore from './pages/Explore';
 
 const router = createBrowserRouter([
-  {path:'/',element:<Home/>}
+  {path:'/',element:<Home/>},
+  // {path:"/server", element:<Server/>},
+  {path:"/explore/:categoryName", element:<Explore />}
 ])
 
 function App() {

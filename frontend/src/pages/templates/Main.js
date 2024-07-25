@@ -1,7 +1,8 @@
 
 import {Box, Typography} from '@mui/material'
 import {useTheme} from '@mui/material/styles'
-const Main=()=>
+import { Children } from 'react'
+const Main=({children})=>
 {
     const theme = useTheme()
     return(
@@ -9,7 +10,7 @@ const Main=()=>
         height: `calc(100vh - ${theme.primaryAppBar.height}px)`,
         overflow: 'hidden'
         }}>
-        {[...Array(100)].map((_,i)=> <Typography key={i} paragraph>{ i+1}</Typography>)}
+        {children}
         </Box>
     )  
 

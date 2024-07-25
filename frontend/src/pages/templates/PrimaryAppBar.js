@@ -11,7 +11,7 @@ import {useTheme} from "@mui/material/styles"
 import Link from '@mui/material/Link';
 import {Drawer} from '@mui/material'
 import useMediaQuery from '@mui/material/useMediaQuery';
-
+import ExploreCategories from '../../components/SecondaryDraw/ExploreCategories';
 
 
 const PrimaryAppBar=()=>
@@ -39,6 +39,21 @@ const PrimaryAppBar=()=>
         }
         setSideMenu(open);
       };
+
+      const list = () => (
+        <Box
+          sx={{
+            minWidth: 200,
+            paddingTop: `${theme.primaryAppBar.height}px`,
+          }}
+          role="presentation"
+          onClick={toggleDrawer(false)}
+          onKeyDown={toggleDrawer(false)}
+        >
+          <ExploreCategories />
+        </Box>
+      );
+
     return (
       <AppBar sx={{zIndex: (theme) => theme.zIndex.drawer +2, backgroundColor:theme.palette.background.default, borderBottom:`1px solid ${theme.palette.divider }`}}>
         <Toolbar variant="dense" sx={{height:theme.primaryAppBar.height,minHeight:theme.primaryAppBar.height}}>
@@ -49,7 +64,7 @@ const PrimaryAppBar=()=>
         </Box>
 
         <Drawer anchor='left' open={sideMenu} onClose={toggleDrawer(false)}>
-            {[...Array(100)].map((_,i)=> <Typography key={i} paragraph>{ i+1}</Typography>)}
+            {list()}
         </Drawer>
           <Link href='/' underline='none' color="inherit">
             <Typography variant='h5' noWrap components="div" sx={{ display:{fontWeight: 700, letterSpacing: "-0.5px" }}}>

@@ -38,7 +38,7 @@ const PopularChannels = ({ open }) => {
                     display: 'flex',
                     alignContent: 'center',
                     flex: '1 1 100%',
-                    // backgroundColor: "blue",
+                    // backgroundColor: "blue", 
                 }}
             >
                 <Typography sx={{ display: open ? 'block' : 'none' }}>
@@ -90,9 +90,7 @@ const PopularChannels = ({ open }) => {
                                                 color: 'textSecondary',
                                             }}
                                         >
-                                            {server.categories
-                                                .map((category) => CapitalizeFirstLetter(category))
-                                                .join(',')}
+                                            {server.category}
                                         </Typography>
                                     }
                                     sx={{ opacity: open ? 1 : 0 }}

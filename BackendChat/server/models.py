@@ -49,15 +49,6 @@ class Server(models.Model):
     description = models.CharField(max_length=250, blank=True, null=True)
     member = models.ManyToManyField(settings.AUTH_USER_MODEL)
 
-    def __str__(self):
-        return self.name
-
-
-class Channels(models.Model):
-    name = models.CharField(max_length=100)
-    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="channel_owner")
-    topic = models.CharField(max_length=100)
-    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="channel_server")
     banner = models.ImageField(
         upload_to=server_banner_upload_path,
         null=True,
@@ -74,20 +65,30 @@ class Channels(models.Model):
     def save(self, *args, **kwargs):
         self.name = self.name.lower()
         if self.id:
-            existing = get_object_or_404(Channels, id=self.id)
+            existing = get_object_or_404(Server, id=self.id)
             if existing.icon != self.icon:
                 existing.icon.delete(save=False)
             if existing.banner != self.banner:
                 existing.banner.delete(save=False)
-        super(Channels, self).save(*args, **kwargs)
+        super(Server, self).save(*args, **kwargs)
 
     @receiver(models.signals.pre_delete, sender="server.Channels")
-    def channels_delete_file(sender, instance, **kwargs):
+    def server_delete_file(sender, instance, **kwargs):
         for field in instance._meta.fields:
             if field.name == "icon" or field.name == "banner":
                 file = getattr(instance, field.name)
                 if file:
                     file.delete(save=False)
+
+    def __str__(self):
+        return self.name
+
+
+class Channels(models.Model):
+    name = models.CharField(max_length=100)
+    owner = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="channel_owner")
+    topic = models.CharField(max_length=100)
+    server = models.ForeignKey(Server, on_delete=models.CASCADE, related_name="channel_server")
 
     def __str__(self):
         return self.name

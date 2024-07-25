@@ -1,6 +1,12 @@
 from rest_framework import serializers
 
-from .models import Channels, Server
+from .models import Category, Channels, Server
+
+
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = "__all__"
 
 
 class ChannelSerializers(serializers.ModelSerializer):
@@ -12,6 +18,7 @@ class ChannelSerializers(serializers.ModelSerializer):
 class ServerSerializers(serializers.ModelSerializer):
     num_members = serializers.SerializerMethodField()
     channel_server = ChannelSerializers(many=True)
+    category = serializers.StringRelatedField()
 
     class Meta:
         model = Server

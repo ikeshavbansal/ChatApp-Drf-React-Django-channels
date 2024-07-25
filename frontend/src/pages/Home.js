@@ -4,6 +4,8 @@ import PrimaryDrawer from "./templates/PrimaryDrawer";
 import SecondaryDrawer from "./templates/SecondaryDrawer";
 import Main from "./templates/Main";
 import PopularChannels from "../components/PrimaryDraw/PopularChannels";
+import ExploreCategories from "../components/SecondaryDraw/ExploreCategories";
+import ExploreServers from "../components/Main/ExploreServer";
 
 const Home=()=>
 {
@@ -14,8 +16,12 @@ const Home=()=>
 <PrimaryDrawer>
     <PopularChannels open={false}/>
 </PrimaryDrawer>
-<SecondaryDrawer/>
-<Main/>
+<SecondaryDrawer>
+    <ExploreCategories/>
+</SecondaryDrawer>
+<Main>
+    <ExploreServers/>
+</Main>
 </Box>
     </>
 }

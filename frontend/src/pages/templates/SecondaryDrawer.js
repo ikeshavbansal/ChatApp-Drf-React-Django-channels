@@ -2,7 +2,7 @@ import {Box, Typography} from '@mui/material'
 import {useTheme } from '@mui/material/styles'
 
 
-const SecondaryDrawer=()=>
+const SecondaryDrawer=({children})=>
 {
     const theme = useTheme();
  return <Box sx={{
@@ -13,10 +13,7 @@ const SecondaryDrawer=()=>
     borderRight: `1px solid ${theme.palette.divider}`,
     display: { xs: 'none', sm: 'block' },
   }}>
-{[...Array(50)].map((_,i)=> 
-<Typography key={i} paragraph>
-{ i+1}
-</Typography>)}
+{children}
     </Box>
 }
 
