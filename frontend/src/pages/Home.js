@@ -11,17 +11,17 @@ const Home=()=>
 {
     return <>
 <Box sx={{display:'flex'}}>
-<CssBaseline/>
-<PrimaryAppBar/>
-<PrimaryDrawer>
-    <PopularChannels open={false}/>
-</PrimaryDrawer>
-<SecondaryDrawer>
-    <ExploreCategories/>
-</SecondaryDrawer>
-<Main>
-    <ExploreServers/>
-</Main>
+    <CssBaseline/>
+    <PrimaryAppBar/>
+    <PrimaryDrawer>
+        <PopularChannels open={false}/>
+    </PrimaryDrawer>
+    <SecondaryDrawer>
+        <ExploreCategories/>
+    </SecondaryDrawer>
+    <Main>
+        <ExploreServers/>
+    </Main>
 </Box>
     </>
 }

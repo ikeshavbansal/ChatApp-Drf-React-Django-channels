@@ -15,19 +15,19 @@ import { MEDIA_URL } from '../../config';
 import { Link } from 'react-router-dom';
 import { CapitalizeFirstLetter } from '../../helpers/utils.ts';
 
-const PopularChannels = ({ open }) => {
-    const { dataCRUD, fetchData, error, isloading } = useCrud(
-        [],
-        'server/select/'
-    );
+const UserServers = ({ open,data }) => {
+    // const { dataCRUD, fetchData, error, isloading } = useCrud(
+    //     [],
+    //     'server/select/?by_serverId=1'
+    // );
 
-    useEffect(() => {
-        fetchData();
-    }, []);
+    // useEffect(() => {
+    //     fetchData();
+    // }, []);
 
-    useEffect(() => {
-        console.log(dataCRUD);
-    }, [dataCRUD]);
+    // useEffect(() => {
+    //     console.log(dataCRUD);
+    // }, [dataCRUD]);
 
     return (
         <>
@@ -42,11 +42,11 @@ const PopularChannels = ({ open }) => {
                 }}
             >
                 <Typography sx={{ display: open ? 'block' : 'none' }}>
-                    Popular
+                    Servers 
                 </Typography>
             </Box>
             <List sx={{ width: '100%' }}>
-                {dataCRUD.map((server) => (
+                {data.map((server) => (
                     <ListItem
                         key={server.id}
                         disablePadding
@@ -112,4 +112,4 @@ const PopularChannels = ({ open }) => {
     );
 };
 
-export default PopularChannels;
+export default UserServers;

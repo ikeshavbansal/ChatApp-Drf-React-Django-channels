@@ -8,24 +8,20 @@ import {
     ListItemButton,
     useTheme,
   } from '@mui/material';
-  import React, { useEffect } from 'react';
-  import useCrud from '../../hooks/useCrud.tsx';
+  import React from 'react';
   import ListItemAvatar from '@mui/material/ListItemAvatar';
   import Avatar from '@mui/material/Avatar';
   import { MEDIA_URL } from '../../config';
   import { Link } from 'react-router-dom';
+  import { useParams } from 'react-router-dom';
   
-  const ExploreCategories = () => {
-    const { dataCRUD, fetchData, error, isloading } = useCrud(
-      [],
-      'server/category/'
-    );
+  const ServerChannel = ({data}) => {
+
     const theme = useTheme();
+    const server_name = data?.[0]?.name ?? "Server"
+    const {serverId} = useParams()
    
-    useEffect(() => {
-      fetchData();
-    }, []);
-  
+    console.log(data,"/////")
     return (
       <>
         <Box
@@ -40,29 +36,22 @@ import {
             backgroundColor: theme.palette.background.default,
           }}
         >
-          <Typography>Explore</Typography>
+          <Typography variant='body1' style={{textOverlow:"ellipsis" , overflow :"hidden" , whitespace:"nowrap"}}>{server_name}</Typography>
         </Box>
         <List sx={{ width: '100%' }}>
-          {dataCRUD.map((category) => (
+          {data.flatMap((obj) => obj.channel_server.map(category=>(
             <ListItem
               key={category.id}
               disablePadding
-              sx={{ display: 'block' }}
+              sx={{ display: 'block', maxHeight:"40pxm" }}
               dense={true}
             >
               <Link
-                to={`/explore/${category.name.toLowerCase()}`}
+                to={`/server/${serverId}/${category.id}`}
                 style={{ textDecoration: 'none', color: 'inherit' }}
               >
                 <ListItemButton sx={{ minHeight: 0, justifyContent: 'center' }}>
-                  <ListItemIcon sx={{ minWidth: 0, justifyContent: 'center' }}>
-                    <ListItemAvatar sx={{ minWidth: '50px' }}>
-                      <Avatar
-                        alt="Category Icon"
-                        src={`${MEDIA_URL}${category.icon}`}
-                      />
-                    </ListItemAvatar>
-                  </ListItemIcon>
+                  
                   <ListItemText
                     primary={
                       <Typography
@@ -90,10 +79,10 @@ import {
                 </ListItemButton>
               </Link>
             </ListItem>
-          ))}
+          )))}
         </List>
       </>
     );
   };
   
-  export default ExploreCategories;
+  export default ServerChannel;

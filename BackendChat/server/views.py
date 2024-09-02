@@ -26,7 +26,7 @@ class ServerListViewSet(viewsets.ViewSet):
         category = request.query_params.get("category")
         qty = request.query_params.get("qty")
         by_user = request.query_params.get("by_user") == "true"
-        by_serverid = request.query_params.get("by_serverid")
+        by_serverid = request.query_params.get("by_serverId")
         with_num_members = request.query_params.get("with_num_members") == "true"
 
         # if by_user or by_serverid and not request.user.is_authenticated:
@@ -50,8 +50,8 @@ class ServerListViewSet(viewsets.ViewSet):
             self.querySet = self.querySet[: int(qty)]
 
         if by_serverid:
-            if not request.user.is_authenticated:
-                raise AuthenticationFailed()
+            # if not request.user.is_authenticated:
+            #     raise AuthenticationFailed()
 
             try:
                 self.querySet = self.querySet.filter(id=by_serverid)

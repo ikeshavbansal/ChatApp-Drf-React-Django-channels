@@ -13,7 +13,7 @@ import {
   import CardContent from '@mui/material/CardContent';
   import CardMedia from '@mui/material/CardMedia';
   import React, { useEffect } from 'react';
-  import useCrud from '../../hooks/useCrud';
+  import useCrud from '../../hooks/useCrud.tsx';
   import ListItemAvatar from '@mui/material/ListItemAvatar';
   import Avatar from '@mui/material/Avatar';
   import { MEDIA_URL } from '../../config';

@@ -1,3 +1,4 @@
+from chating.consumer import ChattingConsumer
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -16,6 +17,8 @@ urlpatterns = [
     path("api/docs/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/schema/ui/", SpectacularSwaggerView.as_view()),
 ] + router.urls
+
+websocket_urlpatterns = [path("ws/test", ChattingConsumer.as_asgi())]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
