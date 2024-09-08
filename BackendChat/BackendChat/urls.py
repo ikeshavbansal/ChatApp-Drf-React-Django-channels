@@ -1,4 +1,5 @@
 from chating.consumer import ChattingConsumer
+from chating.views import MessageViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
@@ -12,13 +13,15 @@ router.register("api/server/select", ServerListViewSet, basename="ServerListView
 
 router.register("api/server/category", CategoryListViewSet, basename="CategoryListViewSet")
 
+router.register("api/messages", MessageViewSet, basename="message")
+
 urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/docs/schema/", SpectacularAPIView.as_view(), name="schema"),
     path("api/docs/schema/ui/", SpectacularSwaggerView.as_view()),
 ] + router.urls
 
-websocket_urlpatterns = [path("ws/test", ChattingConsumer.as_asgi())]
+websocket_urlpatterns = [path("<str:serverId>/<str:channelId>", ChattingConsumer.as_asgi())]
 
 if settings.DEBUG:
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

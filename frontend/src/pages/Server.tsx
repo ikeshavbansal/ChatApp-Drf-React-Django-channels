@@ -45,7 +45,7 @@ const isChannel = ()=>
     } 
     else{
         return dataCRUD.some((server)=>
-        server.channel_server.some((channel)=>channel.id === parseInt(channelId )))
+        server.channel_server.some((channel)=>channel.id === parseInt(channelId)))
     }
 }
 
@@ -69,7 +69,7 @@ if(!isChannel())
       <ServerChannel data={dataCRUD}/>
     </SecondaryDrawer>
     <Main>
-        <MessageInterface/>
+        <MessageInterface data ={dataCRUD}/>
     </Main>
 </Box>
     )

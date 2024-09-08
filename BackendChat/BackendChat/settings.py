@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     "account",
     "server",
     "corsheaders",
+    "chating",
 ]
 
 MIDDLEWARE = [
