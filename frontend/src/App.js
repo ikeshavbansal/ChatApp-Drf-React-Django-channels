@@ -13,23 +13,29 @@ import {Provider} from 'react-redux'
 import store from './store';
 import Explore from './pages/Explore';
 import Server from './pages/Server.tsx';
+import Login from './pages/Login.js';
+import { AuthServiceProvider } from "./context/AuthContext.js";
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
   {path:"/server/:serverId/:channelId?", element:<Server/>},
-  {path:"/explore/:categoryName", element:<Explore />}
+  {path:"/explore/:categoryName", element:<Explore />},
+  {path:'/login',element:<Login/>},
 ])
 
 function App() {
   return (
     <>
+    <AuthServiceProvider>
     <ThemeProvider theme={createMuiTheme}>
     <Provider store={store}>
     <RouterProvider router={router}/>
     </Provider>
     </ThemeProvider>
+    </AuthServiceProvider>
 
     </>
+
   );
 }
 
