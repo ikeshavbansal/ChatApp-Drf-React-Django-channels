@@ -16,7 +16,7 @@ const [isLoggedIn, setIsLoggedIn] = useState(getInitialLoggedInValue);
             const accessToken = localStorage.getItem("access_token")
             console.log(accessToken)
             const response = await axios.get(
-                `http://127.0.0.1:8000/api/account/?user_id=${userId}`,{
+                `http://127.0.0.1:8080/api/account/?user_id=${userId}`,{
                 headers:{
                     Authorization: `Bearer ${accessToken}`
                 }

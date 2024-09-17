@@ -13,7 +13,7 @@ import {Provider} from 'react-redux'
 import store from './store';
 import Explore from './pages/Explore';
 import Server from './pages/Server.tsx';
-import Login from './pages/Login.js';
+import Login from './pages/Login.tsx';
 import { AuthServiceProvider } from "./context/AuthContext.js";
 
 const router = createBrowserRouter([

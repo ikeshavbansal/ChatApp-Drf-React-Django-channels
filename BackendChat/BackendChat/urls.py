@@ -1,12 +1,15 @@
+from account.views import AccountViewSet
 from chating.consumer import ChattingConsumer
 from chating.views import MessageViewSet
 from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from drf_spectacular.views import (SpectacularAPIView, SpectacularRedocView,
+                                   SpectacularSwaggerView)
 from rest_framework.routers import DefaultRouter
-from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from rest_framework_simplejwt.views import (TokenObtainPairView,
+                                            TokenRefreshView)
 from server.views import CategoryListViewSet, ServerListViewSet
 
 router = DefaultRouter()
@@ -15,6 +18,8 @@ router.register("api/server/select", ServerListViewSet, basename="ServerListView
 router.register("api/server/category", CategoryListViewSet, basename="CategoryListViewSet")
 
 router.register("api/messages", MessageViewSet, basename="message")
+router.register("api/account", AccountViewSet, basename="account")
+
 
 urlpatterns = [
     path("admin/", admin.site.urls),
