@@ -15,12 +15,15 @@ import Explore from './pages/Explore';
 import Server from './pages/Server.tsx';
 import Login from './pages/Login.tsx';
 import { AuthServiceProvider } from "./context/AuthContext.js";
+import TestLogin from './pages/TestLogin';
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
   {path:"/server/:serverId/:channelId?", element:<Server/>},
   {path:"/explore/:categoryName", element:<Explore />},
   {path:'/login',element:<Login/>},
+  {path:'/test',element:<TestLogin/>},
+
 ])
 
 function App() {

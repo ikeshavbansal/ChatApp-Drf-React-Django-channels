@@ -9,7 +9,7 @@ from .serializers import AccountSerializer
 
 class AccountViewSet(viewsets.ViewSet):
     queryset = UserAccount.objects.all()
-    # permission_classes = [IsAuthenticated]
+    permission_classes = [IsAuthenticated]
 
     @user_list_docs
     def list(self, request):
