@@ -1,4 +1,4 @@
-import useAxiosWithInterceptor from "../helpers/jwtinterceptor.ts";
+import useAxiosWithInterceptor from "../helpers/jwtinterceptor";
 import { BASE_URL } from "../config";
 import { useState } from "react";
 interface useCrudInterface<T> {

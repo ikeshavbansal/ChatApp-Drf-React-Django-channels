@@ -16,13 +16,18 @@ import Server from './pages/Server.tsx';
 import Login from './pages/Login.tsx';
 import { AuthServiceProvider } from "./context/AuthContext.js";
 import TestLogin from './pages/TestLogin';
+import ProtectedRoute from './services/ProtectedRoute';
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
   {path:"/server/:serverId/:channelId?", element:<Server/>},
   {path:"/explore/:categoryName", element:<Explore />},
   {path:'/login',element:<Login/>},
-  {path:'/test',element:<TestLogin/>},
+  {path:'/testlogin',element:
+    <ProtectedRoute>
+    <TestLogin/>
+    </ProtectedRoute>
+  },
 
 ])
 
