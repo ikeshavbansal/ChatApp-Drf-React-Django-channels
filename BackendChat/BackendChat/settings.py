@@ -133,7 +133,8 @@ REST_FRAMEWORK = {
     "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
     "DEFAULT_AUTHENTICATION_CLASSES": [
         # "rest_framework.authentication.SessionAuthentication",
-        "rest_framework_simplejwt.authentication.JWTAuthentication",
+        # "rest_framework_simplejwt.authentication.JWTAuthentication",
+        "account.authenticate.JWTCookieAuthentication",
     ],
 }
 
@@ -155,7 +156,7 @@ SIMPLE_JWT = {
     # JWTCookie
     "ACCESS_TOKEN_NAME": "access_token",
     "REFRESH_TOKEN_NAME": "refresh_token",
-    "JWT_COOKIE_SAMESITE": "None",
+    "JWT_COOKIE_SAMESITE": "lax",
 }
 
 
