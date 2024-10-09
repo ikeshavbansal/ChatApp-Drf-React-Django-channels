@@ -7,7 +7,8 @@ from rest_framework_simplejwt.views import (TokenObtainPairView,
 
 from .models import UserAccount
 from .schemas import user_list_docs
-from .serializers import AccountSerializer
+from .serializers import (AccountSerializer, CustomTokenObtainPairSerializer,
+                          JWTCookieTokenRefreshSerializer)
 
 
 class AccountViewSet(viewsets.ViewSet):
@@ -46,4 +47,9 @@ class JWTSetCookieMixin:
 
 
 class JWTCookieTokenObtainPairView(JWTSetCookieMixin, TokenObtainPairView):
-    pass
+    serializer_class = CustomTokenObtainPairSerializer
+
+
+class JWTCookieTokenRefreshView(JWTSetCookieMixin, TokenRefreshView):
+    serializer_class = JWTCookieTokenRefreshSerializer
+

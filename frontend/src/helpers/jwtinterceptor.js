@@ -1,12 +1,11 @@
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import { BASE_URL } from '../config';
-
-const API_BASE_URL = BASE_URL;
+import { useAuthService } from "../services/AuthService";
 
 const useAxiosWithInterceptor = () => {
-    const jwtAxios = axios.create({ baseURL: API_BASE_URL });
+    const jwtAxios = axios.create({  });
     const navigate = useNavigate();
+    const { logout } = useAuthService()
 
     jwtAxios.interceptors.response.use(
         (response) => {
@@ -14,29 +13,25 @@ const useAxiosWithInterceptor = () => {
         },
         async (error) => {
             const originalRequest = error.config;
-            if (error.response?.status === 401 || error.response?.status === 403) {
-                const refreshToken = localStorage.getItem("refresh_token");
-                if (refreshToken) {
-                    try {
-                        const refreshResponse = await axios.post(
-                            "http://127.0.0.1:8080/api/token/refresh/",
-                            {
-                                refresh: refreshToken,
-                            }
-                        );
-                        const newAccessToken = refreshResponse.data.access;
-                        localStorage.setItem("access_token", newAccessToken);
-                        originalRequest.headers['Authorization'] = `Bearer ${newAccessToken}`;
-                        return jwtAxios(originalRequest);
-                    } catch (refreshError) {
-                        navigate('/login');
-                        throw refreshError;
+            if (error.response.status === 401 || 403) {
+                axios.defaults.withCredentials = true;
+         
+                  try {
+                    const response = await axios.post(
+                      "http://127.0.0.1:8000/api/token/refresh/"
+                    );
+                    if (response["status"] == 200) {
+                      return jwtAxios(originalRequest);
                     }
-                } else {
-                    navigate('/login');
-                }
-            }
-            throw error;
+                  } catch (refreshError) {
+                    logout()
+                    const goLogin = () => navigate("/login");
+                    goLogin();
+                    return Promise.reject(refreshError);
+                  }
+                
+              }
+           
         }
     );
     

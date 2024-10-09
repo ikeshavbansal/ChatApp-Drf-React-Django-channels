@@ -10,63 +10,53 @@ const getInitialLoggedInValue = () => {
 
 const [isLoggedIn, setIsLoggedIn] = useState(getInitialLoggedInValue);
     
-    // const getUserDetails = async () =>{
-    //     try {
-    //         const userId = localStorage.getItem("userId")
-    //         const accessToken = localStorage.getItem("access_token")
-    //         console.log(accessToken)
-    //         const response = await axios.get(
-    //             `http://127.0.0.1:8080/api/account/?user_id=${userId}`,{
-    //             headers:{
-    //                 Authorization: `Bearer ${accessToken}`
-    //             }
-    //         });
-    //         const userDetails = response.data
-    //         localStorage.setItem("username", userDetails.username);
-    //         setIsLoggedIn(true);
-    //         localStorage.setItem("isLoggedIn", "true")
-    //     } catch (err) {
-    //         setIsLoggedIn(false)
-    //         localStorage.setItem("isLoggedIn", "false")
-    //         return err;
-    //     }
-    // }
-
-    // const getUserIdFromToken = (access) => {
-    //     const token = access
-    //     const tokenParts = token.split('.')
-    //     const encodedPayLoad = tokenParts[1]
-    //     const decodedPayLoad = atob(encodedPayLoad)
-    //     const payLoadData = JSON.parse(decodedPayLoad)
-    //     const userId = payLoadData.user_id
-
-    //     return userId
-    // }
-
-    const login = async (username, password) =>{
-        try {
-            const response = await axios.post(
-                "http://127.0.0.1:8080/api/token/", {
-                    username,
-                    password,
-            },{withCredentials: true}
-            );
-
-            localStorage.setItem("isLoggedIn", "true")
-            setIsLoggedIn(true)
-            // getUserDetails()
-
-        } catch (err) {
-            return err.response.status;
-        }
-    }
-
-    const logout = () => {
-
+const getUserDetails = async () =>{
+    try {
+        const userId = localStorage.getItem("user_id")
+        const response = await axios.get(
+            `http://127.0.0.1:8000/api/account/?user_id=${userId}`,
+            {
+                withCredentials: true
+            }
+        );
+        const userDetails = response.data
+        localStorage.setItem("username", userDetails.username);
+        setIsLoggedIn(true);
+        localStorage.setItem("isLoggedIn", "true")
+    } catch (err) {
+        setIsLoggedIn(false)
         localStorage.setItem("isLoggedIn", "false")
-        setIsLoggedIn(false);
-
+        return err;
     }
+}
+
+const login = async (username: string, password: string) =>{
+    try {
+        const response = await axios.post(
+            "http://127.0.0.1:8000/api/token/", {
+                username,
+                password,
+        }, { withCredentials: true }
+        );
+
+        const user_id = response.data.user_id
+        localStorage.setItem("isLoggedIn", "true")
+        localStorage.setItem("user_id", user_id)
+        setIsLoggedIn(true)
+
+        getUserDetails()
+
+    } catch (err) {
+        return err.response.status;
+    }
+}
+
+const logout = () => {
+    localStorage.setItem("isLoggedIn", "false")
+    localStorage.removeItem("user_id")
+    localStorage.removeItem("username");
+    setIsLoggedIn(false);
+}
 
     return {login, isLoggedIn, logout}
    
