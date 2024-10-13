@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-
+import { BASE_URL } from "../config";
 export function useAuthService() {
 
 const getInitialLoggedInValue = () => {
@@ -14,7 +14,7 @@ const getUserDetails = async () =>{
     try {
         const userId = localStorage.getItem("user_id")
         const response = await axios.get(
-            `http://127.0.0.1:8000/api/account/?user_id=${userId}`,
+            `http://127.0.0.1:8080/api/account/?user_id=${userId}`,
             {
                 withCredentials: true
             }
@@ -30,10 +30,10 @@ const getUserDetails = async () =>{
     }
 }
 
-const login = async (username: string, password: string) =>{
+const login = async (username, password) =>{
     try {
         const response = await axios.post(
-            "http://127.0.0.1:8000/api/token/", {
+            "http://127.0.0.1:8080/api/token/", {
                 username,
                 password,
         }, { withCredentials: true }
@@ -51,6 +51,16 @@ const login = async (username: string, password: string) =>{
     }
 }
 
+const refreshAccessToken = async () => {
+    try {
+        await axios.post(
+            `${BASE_URL}/token/refresh/`, {} , {withCredentials:true}
+        )
+    } catch (refreshError) {
+        return Promise.reject(refreshError)
+    }
+}
+
 const logout = () => {
     localStorage.setItem("isLoggedIn", "false")
     localStorage.removeItem("user_id")
@@ -58,6 +68,6 @@ const logout = () => {
     setIsLoggedIn(false);
 }
 
-    return {login, isLoggedIn, logout}
+    return {login, isLoggedIn, logout, refreshAccessToken}
    
 } 

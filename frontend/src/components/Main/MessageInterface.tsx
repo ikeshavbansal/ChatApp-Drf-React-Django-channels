@@ -16,48 +16,21 @@ import {
   } from "@mui/material";
 import MessageInterfaceChannels from "./MessageInterfaceChannels.tsx";
 import Scroll from "./Scroll.tsx";
+import useChatWebSocket from "../../services/chatService";
 
 const MessageInterface =({data})=>
 {
-    const [newMessages, setNewMessages] = useState<string[]>([]);
-    const [message,setMessage]  = useState("")
-    const {serverId,channelId} = useParams() 
-    const {fetchData} = useCrud<Servers>([],`messages/?channel_id=${channelId}`);
-    const server_name = data?.[0]?.name ?? "Server";
+  
     const theme = useTheme();
-    const socketUrl = channelId ? `ws://127.0.0.1:8080/${serverId}/${channelId}` : null
-    
-    
+    const {serverId,channelId} = useParams() 
 
-const {sendJsonMessage} = useWebSocket(socketUrl,
-    {
-        onOpen: async ()=>
-        {
-          try{
-            const data = await fetchData()
-            setNewMessages([])
-            setNewMessages(Array.isArray(data) ? data : [])
-            console.log("connected")
-          }
-          catch(error){
-            console.log(error)
-          }
-        },
-        onClose:()=>
-        {
-            console.log("Disconnected")
-        },
-        onError:()=>
-        {
-            console.log("Error")
-        },
-        onMessage:(msg)=>
-        {
-            const data = JSON.parse(msg.data)
-            setNewMessages((prevMsgs) => [...prevMsgs, data.new_message]);
-            setMessage("")
-        }
-    })
+    const { newMessage, message, setMessage, sendJsonMessage } = useChatWebSocket(
+      channelId || "",
+      serverId || ""
+    );
+
+    const server_name = data?.[0]?.name ?? "Server";
+    
 
     const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
         if (e.key === "Enter") {

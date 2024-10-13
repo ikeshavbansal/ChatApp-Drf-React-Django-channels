@@ -18,7 +18,7 @@ const useAxiosWithInterceptor = () => {
          
                   try {
                     const response = await axios.post(
-                      "http://127.0.0.1:8000/api/token/refresh/"
+                      "http://127.0.0.1:8080/api/token/refresh/"
                     );
                     if (response["status"] == 200) {
                       return jwtAxios(originalRequest);

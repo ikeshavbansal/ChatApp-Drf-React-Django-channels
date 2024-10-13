@@ -14,31 +14,31 @@ class ChattingConsumer(JsonWebsocketConsumer):
         self.user = None
 
     def connect(self):
+        self.user = self.scope["user"]
         self.accept()
-        print(self.scope)
+        if not self.user.is_authenticated:
+            print("////////////////")
+            self.close(code=4001)
+
         self.channel_id = self.scope["url_route"]["kwargs"]["channelId"]
+
         self.user = User.objects.get(id=1)
 
-        async_to_sync(self.channel_layer.group_add)(
-            self.channel_id,
-            self.channel_name,  # channel_name is the unique channel ID of request done by the client
-        )
+        async_to_sync(self.channel_layer.group_add)(self.channel_id, self.channel_name)
 
-    # receive function is called when a message is received from websocket to the Consumer (server)
-    # What happens is that the message is sent to the group (room) where all the other clients are connected
     def receive_json(self, content):
         channel_id = self.channel_id
         sender = self.user
         message = content["message"]
 
-        conversation, _ = Conversation.objects.get_or_create(channel_id=channel_id)
+        conversation, created = Conversation.objects.get_or_create(channel_id=channel_id)
 
         new_message = Messages.objects.create(conversation=conversation, sender=sender, content=message)
 
         async_to_sync(self.channel_layer.group_send)(
             self.channel_id,
             {
-                "type": "chat_message",
+                "type": "chat.message",
                 "new_message": {
                     "id": new_message.id,
                     "sender": new_message.sender.username,
@@ -48,9 +48,8 @@ class ChattingConsumer(JsonWebsocketConsumer):
             },
         )
 
-    # This function must have the same name as the one in the receive function "chat_message"
     def chat_message(self, event):
-        self.send_json(event)  # send_json is a function of JsonWebsocketConsumer
+        self.send_json(event)
 
     def disconnect(self, close_code):
         async_to_sync(self.channel_layer.group_discard)(self.channel_id, self.channel_name)

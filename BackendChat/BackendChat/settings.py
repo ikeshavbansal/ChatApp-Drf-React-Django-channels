@@ -151,7 +151,7 @@ CORS_ALLOW_CREDENTIALS = True
 CHANNEL_LAYERS = {"default": {"BACKEND": "channels.layers.InMemoryChannelLayer"}}
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=25),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=5),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=30),
     # JWTCookie
     "ACCESS_TOKEN_NAME": "access_token",

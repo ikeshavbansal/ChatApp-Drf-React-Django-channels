@@ -19,9 +19,11 @@ django_application = get_asgi_application()
 
 from . import urls  # noqa isort:skip
 
+from chating.middleware import JWTAuthMiddleWare  # noqa isort:skip
+
 application = ProtocolTypeRouter(
     {
         "http": get_asgi_application(),
-        "websocket": URLRouter(urls.websocket_urlpatterns),
+        "websocket": JWTAuthMiddleWare(URLRouter(urls.websocket_urlpatterns)),
     }
 )

@@ -20,7 +20,9 @@ import ProtectedRoute from './services/ProtectedRoute';
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
-  {path:"/server/:serverId/:channelId?", element:<Server/>},
+  {path:"/server/:serverId/:channelId?", element:<ProtectedRoute>
+  <Server/>
+  </ProtectedRoute>},
   {path:"/explore/:categoryName", element:<Explore />},
   {path:'/login',element:<Login/>},
   {path:'/testlogin',element:
