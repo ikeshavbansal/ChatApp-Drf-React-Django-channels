@@ -3,7 +3,9 @@ import './App.css';
 import {
   createBrowserRouter,
   RouterProvider,
+  BrowserRouter,
   Route,
+  Routes,
   Link,
 } from "react-router-dom";
 import Home from './pages/Home';
@@ -35,16 +37,34 @@ const router = createBrowserRouter([
 
 function App() {
   return (
-    <>
+    <BrowserRouter>
     <AuthServiceProvider>
-    <ThemeProvider theme={createMuiTheme}>
-    <Provider store={store}>
-    <RouterProvider router={router}/>
-    </Provider>
-    </ThemeProvider>
+    
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route
+            path="/server/:serverId/:channelId?"
+            element={
+              <ProtectedRoute>
+                <Server />
+              </ProtectedRoute>
+            }
+          />
+          <Route path="/explore/:categoryName" element={<Explore />} />
+          <Route path="/login" element={<Login />} />
+          {/* <Route path="/register" element={<Register />} /> */}
+          <Route
+            path="/testlogin"
+            element={
+              <ProtectedRoute>
+                <TestLogin />
+              </ProtectedRoute>
+            }
+          />
+        </Routes>
+     
     </AuthServiceProvider>
-
-    </>
+  </BrowserRouter>
 
   );
 }
