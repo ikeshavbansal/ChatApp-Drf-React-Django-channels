@@ -40,7 +40,7 @@ function App() {
   return (
     <BrowserRouter>
     <AuthServiceProvider>
-    
+    <ThemeProvider theme = {createMuiTheme}>
         <Routes>
           <Route path="/" element={<Home />} />
           <Route
@@ -63,7 +63,7 @@ function App() {
             }
           />
         </Routes>
-     
+        </ThemeProvider>
     </AuthServiceProvider>
   </BrowserRouter>
 

@@ -66,7 +66,7 @@ const refreshAccessToken = async () => {
 const register = async (username, password) =>{
     try {
         const response = await axios.post(
-            "http://127.0.0.1:808`0/api/register/", {
+            "http://127.0.0.1:8080/api/register/", {
                 username,
                 password,
         }, { withCredentials: true }
