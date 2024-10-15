@@ -63,7 +63,7 @@ const refreshAccessToken = async () => {
         return Promise.reject(refreshError)
     }
 }
-const register = async (username: string, password: string) =>{
+const register = async (username, password) =>{
     try {
         const response = await axios.post(
             "http://127.0.0.1:808`0/api/register/", {

@@ -19,6 +19,7 @@ import Login from './pages/Login.tsx';
 import { AuthServiceProvider } from "./context/AuthContext.js";
 import TestLogin from './pages/TestLogin';
 import ProtectedRoute from './services/ProtectedRoute';
+import Register from './pages/Register.tsx';
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
@@ -52,7 +53,7 @@ function App() {
           />
           <Route path="/explore/:categoryName" element={<Explore />} />
           <Route path="/login" element={<Login />} />
-          {/* <Route path="/register" element={<Register />} /> */}
+          <Route path="/register" element={<Register />} />
           <Route
             path="/testlogin"
             element={
