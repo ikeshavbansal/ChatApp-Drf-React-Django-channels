@@ -104,7 +104,7 @@ const MessageInterface =({data})=>
             >
               <Scroll>
                 <List sx={{ width: "100%", bgcolor: "background.paper" }}>
-                  {newMessages.map((msg: Message, index: number) => {
+                  {newMessage.map((msg: Message, index: number) => {
                     return (
                       <ListItem key={index} alignItems="flex-start">
                         <ListItemAvatar>

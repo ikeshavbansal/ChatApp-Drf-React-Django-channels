@@ -2,11 +2,7 @@ import { useEffect } from "react";
 import { useMembershipContext } from "../../context/MemberContext";
 import { useParams } from "react-router-dom";
 
-interface MembershipCheckProps {
-  children: any;
-}
-
-const MembershipCheck: React.FC<MembershipCheckProps> = ({ children }) => {
+const MembershipCheck = ({ children }) => {
   const { serverId } = useParams();
   const { isMember } = useMembershipContext();
 

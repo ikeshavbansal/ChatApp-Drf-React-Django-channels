@@ -20,6 +20,8 @@ import { AuthServiceProvider } from "./context/AuthContext.js";
 import TestLogin from './pages/TestLogin';
 import ProtectedRoute from './services/ProtectedRoute';
 import Register from './pages/Register.tsx';
+import MembershipProvider from './context/MemberContext';
+import MembershipCheck from './components/Membership/MembershipCheck';
 
 const router = createBrowserRouter([
   {path:'/',element:<Home/>},
@@ -47,7 +49,13 @@ function App() {
             path="/server/:serverId/:channelId?"
             element={
               <ProtectedRoute>
-                <Server />
+              <MembershipProvider>
+              <MembershipCheck>
+              <Server />
+              </MembershipCheck>
+              
+              </MembershipProvider>
+                
               </ProtectedRoute>
             }
           />

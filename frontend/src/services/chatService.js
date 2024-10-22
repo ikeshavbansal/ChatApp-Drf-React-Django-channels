@@ -12,7 +12,7 @@ const useChatWebSocket = (channelId,serverId) =>{
     const { logout, refreshAccessToken } = useAuthService();
     const { fetchData } = useCrud(
       [],
-      `/messages/?channel_id=${channelId}`
+      `messages/?channel_id=${channelId}`
     );
 
     const socketUrl = channelId

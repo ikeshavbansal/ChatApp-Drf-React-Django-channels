@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuthService } from "../services/AuthService";
 
 const useAxiosWithInterceptor = () => {
-    const jwtAxios = axios.create({  });
+    const jwtAxios = axios.create({});
     const navigate = useNavigate();
     const { logout } = useAuthService()
 
@@ -13,7 +13,8 @@ const useAxiosWithInterceptor = () => {
         },
         async (error) => {
             const originalRequest = error.config;
-            if (error.response.status === 401 || 403) {
+            console.log(error.response.status,"=======")
+            if (error.response.status === 401 || error.response.status === 403) {
                 axios.defaults.withCredentials = true;
          
                   try {
@@ -31,7 +32,7 @@ const useAxiosWithInterceptor = () => {
                   }
                 
               }
-           
+              return Promise.reject(error);
         }
     );
     
