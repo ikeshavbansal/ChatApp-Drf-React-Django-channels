@@ -25,7 +25,7 @@ import {
   const ExploreServers = () => {
     const { categoryName } = useParams();
     const url = categoryName
-      ? `server/select/?categories=${categoryName}`
+      ? `server/select/?category=${categoryName}`
       : `server/select/`;
     const { dataCRUD, fetchData, error, isloading } = useCrud([], url);
   
