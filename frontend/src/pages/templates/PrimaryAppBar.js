@@ -68,7 +68,7 @@ const PrimaryAppBar=()=>
         </Drawer>
           <Link href='/' underline='none' color="inherit">
             <Typography variant='h5' noWrap components="div" sx={{ display:{fontWeight: 700, letterSpacing: "-0.5px" }}}>
-                ChikChik 
+                TALK 
             </Typography>
           </Link>
         </Toolbar>
